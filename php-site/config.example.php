@@ -20,4 +20,10 @@ return [
     'smtp_pass' => '',
     'smtp_from_email' => 'no-reply@addressgateway.com',
     'smtp_from_name' => 'Address Gateway Opportunities Hub',
+
+    // Google Sheets push — see google-apps-script/Code.gs and
+    // GOOGLE_SHEETS_SETUP.md for how to get these two values. Leave
+    // google_sheet_webapp_url empty to skip the Sheets push entirely.
+    'google_sheet_webapp_url' => '',
+    'google_sheet_secret' => '',
 ];

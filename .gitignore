@@ -6,3 +6,7 @@ data/submissions.json
 # PHP version (php-site/) — same rule: keep the example, ignore the real one
 php-site/config.php
 php-site/data/submissions.json
+
+# Local extraction of the deployment zip — not part of the source tree
+/growthacceleratorphp/
+/growthacceleratorphp.zip

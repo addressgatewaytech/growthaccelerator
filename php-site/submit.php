@@ -3,6 +3,7 @@ header('Content-Type: application/json');
 
 require_once __DIR__ . '/lib/db.php';
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/sheets.php';
 
 function json_error($message, $code = 400) {
     http_response_code($code);
@@ -61,5 +62,6 @@ $record = db_add_submission($branch, $fields, $utm);
 
 $config = require __DIR__ . '/config.php';
 mailer_send_notification($record, $config);
+sheets_push($record, $config);
 
 echo json_encode(['ok' => true, 'id' => $record['id']]);
