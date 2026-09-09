@@ -2,3 +2,7 @@ node_modules/
 .env
 data/submissions.json
 *.log
+
+# PHP version (php-site/) — same rule: keep the example, ignore the real one
+php-site/config.php
+php-site/data/submissions.json
