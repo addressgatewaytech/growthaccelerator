@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Submissions Dashboard — Address Gateway Opportunities Hub</title>
+<link rel="icon" type="image/png" href="/assets/img/logo-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-900:#051423; --navy-700:#0b2a45; --cyan:#199fbd; --orange:#f08422;
+    --ink:#364052; --ink-soft:#5b6478; --bg:#f4f7f9; --border:#e1e8f0; --white:#fff;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:'Barlow',Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  header { background:var(--navy-900); color:#fff; padding:18px 28px; display:flex; align-items:center; justify-content:space-between; }
+  header img { height:30px; }
+  header .title { font-weight:700; font-size:15px; color:rgba(255,255,255,0.75); }
+  main { max-width:1400px; margin:0 auto; padding:28px; }
+  .toolbar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:20px; background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px; }
+  .toolbar label { font-size:12.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:.04em; }
+  .toolbar select, .toolbar input { font-family:inherit; padding:8px 10px; border:1px solid var(--border); border-radius:6px; font-size:14px; }
+  .toolbar .stat { margin-left:auto; display:flex; gap:18px; }
+  .toolbar .stat div { text-align:center; }
+  .toolbar .stat strong { display:block; font-size:20px; color:var(--navy-900); }
+  .toolbar .stat span { font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; }
+  table { width:100%; border-collapse:collapse; background:var(--white); border-radius:10px; overflow:hidden; border:1px solid var(--border); }
+  th, td { padding:12px 14px; text-align:left; font-size:13.5px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { background:var(--navy-900); color:#fff; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em; position:sticky; top:0; }
+  tr:hover td { background:#fafcfd; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11.5px; font-weight:700; }
+  .badge-team_track { background:#e6f4f8; color:var(--cyan); }
+  .badge-founder_cofounder { background:#fdeee0; color:var(--orange); }
+  .badge-affiliate_ambassador { background:#f1eafc; color:#7c4fd6; }
+  .badge-service { background:#eaf6ec; color:#2c8a4a; }
+  select.status { padding:6px 8px; border-radius:6px; border:1px solid var(--border); font-size:13px; font-family:inherit; }
+  .status-New { color:#a3271f; font-weight:700; }
+  .status-Reviewed { color:#b8860b; font-weight:700; }
+  .status-Shortlisted { color:#1c6b34; font-weight:700; }
+  .status-Rejected { color:#8a93a6; font-weight:700; }
+  .fields-toggle { background:none; border:none; color:var(--cyan); cursor:pointer; font-size:13px; font-weight:700; padding:0; }
+  .fields-detail { display:none; font-size:12.5px; color:var(--ink-soft); margin-top:8px; max-width:420px; }
+  .fields-detail.open { display:block; }
+  .fields-detail dt { font-weight:700; color:var(--ink); margin-top:6px; }
+  .fields-detail dd { margin:0 0 2px; }
+  .empty { text-align:center; padding:60px 20px; color:var(--ink-soft); }
+  .container-x { overflow-x:auto; }
+  .login-note { max-width:520px; margin:80px auto; text-align:center; color:var(--ink-soft); }
+</style>
+</head>
+<body>
+<header>
+  <img src="/assets/img/logo-mark.png" alt="Address Gateway" style="filter:brightness(0) invert(1);">
+  <span class="title">Opportunities Hub — Submissions Dashboard</span>
+</header>
+<main>
+  <div class="toolbar">
+    <div>
+      <label for="filterBranch">Branch</label>
+      <select id="filterBranch">
+        <option value="">All branches</option>
+        <option value="team_track">Team Track</option>
+        <option value="founder_cofounder">Founder / Co-founder</option>
+        <option value="affiliate_ambassador">Affiliate / Ambassador</option>
+        <option value="service">Service</option>
+      </select>
+    </div>
+    <div>
+      <label for="filterStatus">Status</label>
+      <select id="filterStatus">
+        <option value="">All statuses</option>
+        <option>New</option>
+        <option>Reviewed</option>
+        <option>Shortlisted</option>
+        <option>Rejected</option>
+      </select>
+    </div>
+    <div>
+      <label for="filterFrom">From</label>
+      <input type="date" id="filterFrom">
+    </div>
+    <div>
+      <label for="filterTo">To</label>
+      <input type="date" id="filterTo">
+    </div>
+    <div class="stat" id="statBar"></div>
+  </div>
+
+  <div class="container-x">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Branch</th>
+          <th>Name / Key Info</th>
+          <th>Contact</th>
+          <th>Source</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="emptyMsg" style="display:none;">No submissions match these filters yet.</div>
+  </div>
+</main>
+
+<script src="/admin/admin.js"></script>
+</body>
+</html>

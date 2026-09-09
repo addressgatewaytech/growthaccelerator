@@ -1,0 +1,15 @@
+{
+  "name": "address-gateway-opportunities-hub",
+  "version": "1.0.0",
+  "description": "Address Gateway Opportunities Hub - landing page with backend-enabled application form, admin dashboard, and email notifications.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^10.0.1"
+  }
+}
