@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../lib/auth.php';
+admin_require_login(true);
+
 header('Content-Type: application/json');
 require_once __DIR__ . '/../lib/db.php';
 require_once __DIR__ . '/../lib/mailer.php';

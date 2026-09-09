@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/../lib/auth.php';
+admin_require_login(false);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +22,8 @@
   header { background:var(--navy-900); color:#fff; padding:18px 28px; display:flex; align-items:center; justify-content:space-between; }
   header img { height:30px; }
   header .title { font-weight:700; font-size:15px; color:rgba(255,255,255,0.75); }
+  header .who { display:flex; align-items:center; gap:16px; font-size:13.5px; color:rgba(255,255,255,0.75); }
+  header .who a { color:var(--orange); text-decoration:none; font-weight:700; }
   main { max-width:1400px; margin:0 auto; padding:28px; }
   .toolbar { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:20px; background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px; }
   .toolbar label { font-size:12.5px; font-weight:700; color:var(--ink-soft); display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:.04em; }
@@ -54,6 +60,7 @@
 <header>
   <img src="/assets/img/logo-mark.png" alt="Address Gateway" style="filter:brightness(0) invert(1);">
   <span class="title">Opportunities Hub — Submissions Dashboard</span>
+  <span class="who">Logged in as <?= htmlspecialchars($_SESSION['admin_username'] ?? '') ?> &middot; <a href="logout.php">Log out</a></span>
 </header>
 <main>
   <div class="toolbar">

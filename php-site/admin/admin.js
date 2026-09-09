@@ -120,7 +120,10 @@
     if (filterTo.value) qs.set('to', filterTo.value + 'T23:59:59.999Z');
 
     fetch('/admin/list.php?' + qs.toString())
-      .then(function (res) { return res.json(); })
+      .then(function (res) {
+        if (res.status === 401) { window.location.href = 'login.php'; return Promise.reject('unauthenticated'); }
+        return res.json();
+      })
       .then(function (data) { render(data.rows || []); })
       .catch(function () { rowsEl.innerHTML = ''; emptyMsg.textContent = 'Could not load submissions.'; emptyMsg.style.display = 'block'; });
   }

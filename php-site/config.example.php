@@ -4,6 +4,13 @@
 // version control / never share it publicly, since it holds your SMTP password.
 
 return [
+    // MySQL connection for the admin dashboard's login (see schema.sql).
+    // Create the database + user in hPanel → Databases → MySQL Databases.
+    'db_host' => 'localhost',
+    'db_name' => '',
+    'db_user' => '',
+    'db_pass' => '',
+
     // Where every submission notification email is sent
     'notify_email' => 'cso@addressgateway.com',
 
