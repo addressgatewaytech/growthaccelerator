@@ -15,6 +15,7 @@
   var filterStatus = document.getElementById('filterStatus');
   var filterFrom = document.getElementById('filterFrom');
   var filterTo = document.getElementById('filterTo');
+  var exportBtn = document.getElementById('exportBtn');
 
   function nameFor(row) {
     var f = row.fields || {};
@@ -112,14 +113,22 @@
     });
   }
 
-  function load() {
+  function currentFilters() {
     var qs = new URLSearchParams();
     if (filterBranch.value) qs.set('branch', filterBranch.value);
     if (filterStatus.value) qs.set('status', filterStatus.value);
     if (filterFrom.value) qs.set('from', filterFrom.value + 'T00:00:00.000Z');
     if (filterTo.value) qs.set('to', filterTo.value + 'T23:59:59.999Z');
+    return qs;
+  }
 
-    fetch('/admin/list.php?' + qs.toString())
+  function updateExportLink() {
+    if (exportBtn) exportBtn.href = 'export.php?' + currentFilters().toString();
+  }
+
+  function load() {
+    updateExportLink();
+    fetch('/admin/list.php?' + currentFilters().toString())
       .then(function (res) {
         if (res.status === 401) { window.location.href = 'login.php'; return Promise.reject('unauthenticated'); }
         return res.json();

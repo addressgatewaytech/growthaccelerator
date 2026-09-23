@@ -72,6 +72,56 @@ app.get('/api/admin/submissions', basicAuth, (req, res) => {
   res.json({ ok: true, rows, branchLabels: BRANCH_LABELS });
 });
 
+app.get('/api/admin/export', basicAuth, (req, res) => {
+  const { branch, status, from, to } = req.query;
+  const rows = db.listSubmissions({ branch, status, from, to });
+
+  const filenameBits = ['submissions'];
+  if (branch) filenameBits.push(branch);
+  if (status) filenameBits.push(String(status).toLowerCase());
+  const filename = `${filenameBits.join('-')}-${new Date().toISOString().slice(0, 10)}.csv`;
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+
+  const csvField = (value) => {
+    const s = String(value ?? '');
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const csvRow = (values) => values.map(csvField).join(',') + '\r\n';
+
+  // UTF-8 BOM so Excel opens this correctly instead of guessing the encoding.
+  res.write('﻿');
+  res.write(csvRow(['Date', 'Branch', 'Status', 'Name', 'Contact', 'WhatsApp', 'UTM Source', 'UTM Medium', 'UTM Campaign', 'All Fields']));
+
+  rows.forEach((row) => {
+    const fields = row.fields || {};
+    const utm = row.utm || {};
+    const name = fields.fullName || fields.name || fields.confirmName || '';
+    const contact = fields.email || fields.contact || '';
+    const whatsapp = fields.whatsapp || '';
+    const details = Object.entries(fields)
+      .filter(([, v]) => v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && v.length === 0))
+      .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
+      .join('; ');
+
+    res.write(csvRow([
+      row.createdAt || '',
+      BRANCH_LABELS[row.branch] || row.branch || '',
+      row.status || '',
+      name,
+      contact,
+      whatsapp,
+      utm.utm_source || '',
+      utm.utm_medium || '',
+      utm.utm_campaign || '',
+      details,
+    ]));
+  });
+
+  res.end();
+});
+
 app.patch('/api/admin/submissions/:id/status', basicAuth, (req, res) => {
   const { status } = req.body || {};
   const allowed = ['New', 'Reviewed', 'Shortlisted', 'Rejected'];
